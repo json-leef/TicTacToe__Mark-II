@@ -8,8 +8,9 @@ public class TicTacToe {
 
     static ArrayList<Integer> playerPositions = new ArrayList<Integer>();
     static ArrayList<Integer> cpuPositions = new ArrayList<Integer>();
-    private int[][] gameGrid = new int[3][3];
+    
     private enum Elements {X, O, EMPTY};
+    private Elements[][] gameGrid = new Elements[3][3];
 
     char [] [] gameBoard = {{' ', '|', ' ', '|', ' '},
                 {'-', '+', '-', '+', '-'},
@@ -48,6 +49,8 @@ public class TicTacToe {
 
     public void versusCPU() {
         System.out.println(gameGrid);
+        gameGrid[2][2] = Elements.X;
+        System.out.println(gameGrid[2][2]);
 
         while (true) {
             Scanner scan =  new Scanner(System.in);
