@@ -3,21 +3,51 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-//test monday-
+
 public class TicTacToe {
 
     static ArrayList<Integer> playerPositions = new ArrayList<Integer>();
     static ArrayList<Integer> cpuPositions = new ArrayList<Integer>();
+    private int[][] gameGrid = new int[3][3];
+    private enum Elements {X, O, EMPTY};
 
-    public static void main(String[] args) {
-        char [] [] gameBoard = {{' ', '|', ' ', '|', ' '},
+    char [] [] gameBoard = {{' ', '|', ' ', '|', ' '},
                 {'-', '+', '-', '+', '-'},
                 {' ', '|', ' ', '|', ' '},
                 {'-', '+', '-', '+', '-'},
                 {' ', '|', ' ', '|', ' '}};
 
-        printGameBoard(gameBoard);
+        //printGameBoard(gameBoard);
+    
+    public static void main(String[] args) {
+        TicTacToe action = new TicTacToe();
+        
+        
 
+        while (true) {
+            Scanner players =  new Scanner(System.in);
+            System.out.println("1 Player or 2 Players? [Enter 1 or 2] ");
+            int numPlayers = players.nextInt();
+
+            if (numPlayers == 1) {
+
+                action.versusCPU();
+                break;
+
+            } else if (numPlayers == 2) {
+                versusFriend();
+                break;
+
+            } else {
+                System.out.println(">Invalid Entry<");
+            }
+
+        }  
+
+    }
+
+    public void versusCPU() {
+        System.out.println(gameGrid);
 
         while (true) {
             Scanner scan =  new Scanner(System.in);
@@ -52,6 +82,10 @@ public class TicTacToe {
             System.out.println(result);
 
         }
+
+    }
+
+    public static void versusFriend() {
 
     }
 
