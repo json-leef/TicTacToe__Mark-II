@@ -50,16 +50,67 @@ public class TicTacToe {
         gameGrid[2][2] = Elements.X;
         System.out.println(gameGrid[2][2]);
 
+        Boolean goFirst = true;
+        Elements playerIcon;
+        Elements cpuIcon;
+
+        Scanner order =  new Scanner(System.in);
+        System.out.println("Would you like to go 1st or 2nd? [Enter 1 or 2] ");
+        int orderTurns = order.nextInt();
+        if (orderTurns == 1) {
+            goFirst = true;
+            playerIcon = Elements.X;
+            cpuIcon = Elements.O;
+        }
+        else {
+            goFirst = false;
+            playerIcon = Elements.O;
+            cpuIcon = Elements.X;
+        }
+        //order.close();
+
         while (true) {
-            Scanner scan =  new Scanner(System.in);
-            System.out.println("Enter your placement (1-9): ");
-            int playerPos = scan.nextInt();
+            if (goFirst == false) {
+                Random rand = new Random();
+                int cpuRow = rand.nextInt(2) + 1;
+                int cpuCol = rand.nextInt(2) + 1;
+                // while (playerPositions.contains(cpuPos) || cpuPositions.contains(cpuPos)) {
+                //     cpuPos = rand.nextInt(9) + 1;
+                // }
+                placePiece(gameBoard, cpuRow, cpuCol, cpuIcon);
+                printGameBoard(gameBoard);
+
+                String result = checkWinner();
+                result = checkWinner();
+                if (result.length() > 0) {
+                    System.out.println(result);
+                    break;
+                }
+                System.out.println(result);
+                goFirst = true;
+
+            } 
+            System.out.println("Enter your placement (row, column): ");
+            Scanner scanRow =  new Scanner(System.in);
+            System.out.println("What row?");
+            int row = scanRow.nextInt();
+
+            Scanner scanCol =  new Scanner(System.in);
+            System.out.println("What column?");
+            int col = scanCol.nextInt();
+            //int playerPos = scanRow.nextInt();
+            //scan.close();
+            int playerPos = 1; // deelete afgtyer. Just a placeholder
+
+            row = row -1;
+            col = col - 1;
+
             while (playerPositions.contains(playerPos) || cpuPositions.contains(playerPos)) {
                 System.out.println("Position taken!");
-                playerPos = scan.nextInt();
+                playerPos = scanRow.nextInt();
             }
 
-            placePiece(gameBoard, playerPos, "player");
+            placePiece(gameBoard, row, col, playerIcon);
 
             String result = checkWinner();
             if (result.length() > 0) {
@@ -68,11 +119,9 @@ public class TicTacToe {
             }
 
             Random rand = new Random();
-            int cpuPos = rand.nextInt(9) + 1;
-            while (playerPositions.contains(cpuPos) || cpuPositions.contains(cpuPos)) {
-                cpuPos = rand.nextInt(9) + 1;
-            }
-            placePiece(gameBoard, cpuPos, "cpu");
+            int cpuRow = rand.nextInt(2) + 1;
+            int cpuCol = rand.nextInt(2) + 1;
+            placePiece(gameBoard, cpuRow, cpuCol, cpuIcon);
             printGameBoard(gameBoard);
 
             result = checkWinner();
@@ -99,50 +148,67 @@ public class TicTacToe {
         }
     }
 
-    public static void placePiece(char[][] gameBoard, int pos, String user) {
+    public void placePiece(char[][] gameBoard, int row, int col, Elements icon) {
+        gameGrid[row][col] = icon;
+        String pos = null;
         char symbol = ' ';
 
-        if (user.equals("player")) {
-            symbol = 'X';
-            playerPositions.add(pos);
-        } else if(user.equals("cpu")) {
-            symbol = '0';
-            cpuPositions.add(pos);
+        if (row == 0) {
+            pos = "Top";
+        } else if (row == 1) {
+            pos = "Middle";
+        } else if (row == 2) {
+            pos = "Bottom";
         }
 
+        if (col == 0) {
+            pos += "Left";
+        } else if (col == 1) {
+            pos += "Middle";
+        } else if (col == 2) {
+            pos += "Right";
+        }
+
+        if (icon == Elements.X) {
+            symbol = 'X';
+        } else if (icon == Elements.O) {
+            symbol = 'O';
+        }
+
+        
+
         switch (pos){
-            case 1:
+            case "TopLeft":
                 gameBoard[0][0] = symbol;
                 break;
-            case 2:
+            case "TopMiddle":
                 gameBoard[0][2] = symbol;
                 break;
-            case 3:
+            case "TopRight":
                 gameBoard[0][4] = symbol;
                 break;
-            case 4:
+            case "MiddleLeft":
                 gameBoard[2][0] = symbol;
                 break;
-            case 5:
+            case "MiddleMiddle":
                 gameBoard[2][2] = symbol;
                 break;
-            case 6:
+            case "MiddleRight":
                 gameBoard[2][4] = symbol;
                 break;
-            case 7:
+            case "BottomLeft":
                 gameBoard[4][0] = symbol;
                 break;
-            case 8:
+            case "BottomMiddle":
                 gameBoard[4][2] = symbol;
                 break;
-            case 9:
+            case "BottomRight":
                 gameBoard[4][4] = symbol;
                 break;
             default:
                 break;
         }
-
-
+        //gameBoard[row][col] = icon;
     }
 
     public static String checkWinner() {
