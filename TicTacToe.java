@@ -22,8 +22,7 @@ public class TicTacToe {
     
     public static void main(String[] args) {
         TicTacToe action = new TicTacToe();
-        
-        
+
 
         while (true) {
             Scanner players =  new Scanner(System.in);
@@ -36,7 +35,7 @@ public class TicTacToe {
                 break;
 
             } else if (numPlayers == 2) {
-                versusFriend();
+                action.versusFriend();
                 break;
 
             } else {
@@ -135,7 +134,7 @@ public class TicTacToe {
 
     }
 
-    public static void versusFriend() {
+    public void versusFriend() {
 
     }
 
@@ -175,7 +174,6 @@ public class TicTacToe {
             symbol = 'O';
         }
 
-        
 
         switch (pos){
             case "TopLeft":
