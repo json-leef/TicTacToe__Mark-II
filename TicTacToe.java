@@ -42,9 +42,7 @@ public class TicTacToe {
             } else {
                 System.out.println(">Invalid Entry<");
             }
-
         }  
-
     }
 
     public void versusCPU() {
