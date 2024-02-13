@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-
+//test
 public class TicTacToe {
 
     static ArrayList<Integer> playerPositions = new ArrayList<Integer>();
@@ -23,14 +23,12 @@ public class TicTacToe {
     public static void main(String[] args) {
         TicTacToe action = new TicTacToe();
 
-
         while (true) {
             Scanner players =  new Scanner(System.in);
             System.out.println("1 Player or 2 Players? [Enter 1 or 2] ");
             int numPlayers = players.nextInt();
 
             if (numPlayers == 1) {
-
                 action.versusCPU();
                 break;
 
