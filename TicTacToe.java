@@ -53,7 +53,7 @@ public class TicTacToe {
 
         while (true) {
             Scanner players =  new Scanner(System.in);
-            System.out.println("1 Player or 2 Players? [Enter 1 or 2] ");
+            System.out.println("1 Player, 2 Players, or CPU vs CPU? [Enter 1 or 2 or 3] ");
             int numPlayers = players.nextInt();
 
             if (numPlayers == 1) {
@@ -64,6 +64,9 @@ public class TicTacToe {
                 action.versusFriend();
                 break;
 
+            } else if(numPlayers == 3) {
+                action.cpuVersusCpu();
+                break;
             } else {
                 System.out.println(">Invalid Entry<");
             }
@@ -479,5 +482,232 @@ public class TicTacToe {
         }
         // If game can continue to be played
         return ('o');
+    }
+
+    public void cpuVersusCpu() {
+        Elements CpuOneIcon;
+        Elements CpuTwoIcon;
+        CpuOneIcon = Elements.X;
+        CpuTwoIcon = Elements.O;
+
+        int cpuSeed;
+        
+
+        String cpuPlan = null;
+
+        int row;
+        int col;
+        Elements gamePiece;
+        gamePiece = Elements.X;
+
+        System.out.println("Cpu vs. Cpu:");
+
+
+        while (true) {
+            Random rand = new Random();
+            cpuSeed = rand.nextInt(8) + 1;
+            cpuPlan = cpuStrategy(cpuSeed, gamePiece);
+        
+            
+            switch(cpuPlan) {
+                case "TopRow":
+                    if (gameGrid[0][0] == Elements.EMPTY) {
+                        placePiece(0, 0, gamePiece);
+                    } else if (gameGrid[0][1] == Elements.EMPTY) {
+                        placePiece(0, 1, gamePiece);
+                    } else if (gameGrid[0][2] == Elements.EMPTY) {
+                        placePiece(0, 2, gamePiece);
+                    }
+                    result = checkWinner(gamePiece);
+                    if (result == 'w') {
+                        System.out.println(gamePiece + " Wins!");
+                        break;
+                    }
+                    else if (result == 'f') {
+                        System.out.println("Draw!");
+                        break;
+                    }
+                    break;
+                case "MiddleRow":
+                    if (gameGrid[1][0] == Elements.EMPTY) {
+                        placePiece(1, 0, gamePiece);
+                    } else if (gameGrid[1][1] == Elements.EMPTY) {
+                        placePiece(1, 1, gamePiece);
+                    } else if (gameGrid[1][2] == Elements.EMPTY) {
+                        placePiece(1, 2, gamePiece);
+                    }
+                    break;
+                case "BottomRow":
+                    if (gameGrid[2][0] == Elements.EMPTY) {
+                        placePiece(2, 0, gamePiece);
+                    } else if (gameGrid[2][1] == Elements.EMPTY) {
+                        placePiece(2, 1, gamePiece);
+                    } else if (gameGrid[2][2] == Elements.EMPTY) {
+                        placePiece(2, 2, gamePiece);
+                    }
+                    break;
+                case "LeftColumn":
+                    if (gameGrid[0][0] == Elements.EMPTY) {
+                        placePiece(0, 0, gamePiece);
+                    } else if (gameGrid[1][0] == Elements.EMPTY) {
+                        placePiece(1, 0, gamePiece);
+                    } else if (gameGrid[2][0] == Elements.EMPTY) {
+                        placePiece(2, 0, gamePiece);
+                    }
+                    break;
+                case "MiddleColumn":
+                    if (gameGrid[0][1] == Elements.EMPTY) {
+                        placePiece(0, 1, gamePiece);
+                    } else if (gameGrid[1][1] == Elements.EMPTY) {
+                        placePiece(1, 1, gamePiece);
+                    } else if (gameGrid[2][1] == Elements.EMPTY) {
+                        placePiece(2, 1, gamePiece);
+                    }
+                    break;
+                case "RightColumn":
+                    if (gameGrid[0][2] == Elements.EMPTY) {
+                        placePiece(0, 2, gamePiece);
+                    } else if (gameGrid[1][2] == Elements.EMPTY) {
+                        placePiece(1, 2, gamePiece);
+                    } else if (gameGrid[2][2] == Elements.EMPTY) {
+                        placePiece(2, 2, gamePiece);
+                    }
+                    break;
+                case "Diagonal1":
+                    if (gameGrid[0][0] == Elements.EMPTY) {
+                        placePiece(0, 0, gamePiece);
+                    } else if (gameGrid[1][1] == Elements.EMPTY) {
+                        placePiece(1, 1, gamePiece);
+                    } else if (gameGrid[2][2] == Elements.EMPTY) {
+                        placePiece(2, 2, gamePiece);
+                    }
+                    break;
+                case "Diagonal2":
+                    if (gameGrid[0][2] == Elements.EMPTY) {
+                        placePiece(0, 2, gamePiece);
+                    } else if (gameGrid[1][1] == Elements.EMPTY) {
+                        placePiece(1, 1, gamePiece);
+                    } else if (gameGrid[2][0] == Elements.EMPTY) {
+                        placePiece(2, 0, gamePiece);
+                    }
+                    break;
+                case "Random":
+                    Random move = new Random();
+                    int cpuRow = move.nextInt(3);
+                    int cpuCol = move.nextInt(3);
+                    while (gameGrid[cpuRow][cpuCol] != Elements.EMPTY) {
+                        Random diffMove = new Random();
+                        cpuRow = diffMove.nextInt(3);
+                        cpuCol = diffMove.nextInt(3);
+                    }
+                    placePiece(cpuRow, cpuCol, gamePiece);
+
+            }
+            printGameBoard();
+            result = checkWinner(gamePiece);
+            if (result == 'w') {
+                System.out.println(gamePiece + " Wins!");
+                break;
+            }
+            else if (result == 'f') {
+                System.out.println("Draw!");
+                break;
+            }
+
+        if (gamePiece == Elements.X) {
+            gamePiece = Elements.O;
+        } else if (gamePiece == Elements.O) {
+            gamePiece = Elements.X;
+        }
+        }
+    }
+
+    public String cpuStrategy(int seed, Elements icon) {
+        switch (seed) {
+            case 1:
+                //Top Row
+                if (gameGrid[0][0] == icon || gameGrid[0][0] == Elements.EMPTY){
+                    if (gameGrid[0][1] == icon || gameGrid[0][1] == Elements.EMPTY) {
+                        if (gameGrid[0][2] == icon || gameGrid[0][2] == Elements.EMPTY) {
+                            return ("TopRow");
+                        }
+                    }
+                }
+                break;
+            case 2:
+                //Middle Row
+                if (gameGrid[1][0] == icon || gameGrid[1][0] == Elements.EMPTY) {
+                    if (gameGrid[1][1] == icon || gameGrid[1][1] == Elements.EMPTY) {
+                        if (gameGrid[1][2] == icon || gameGrid[1][2] == Elements.EMPTY) {
+                            return ("MiddleRow");
+                        }
+                    }
+                }
+                break;
+            case 3:
+                //Bottom Row
+                if (gameGrid[2][0] == icon || gameGrid[2][0] == Elements.EMPTY) {
+                    if (gameGrid[2][1] == icon || gameGrid[2][1] == Elements.EMPTY) {
+                        if (gameGrid[2][2] == icon || gameGrid[2][2] == Elements.EMPTY) {
+                            return ("BottomRow");
+                        }
+                    }
+                }
+                break;
+            case 4:
+                //Left Column
+                if (gameGrid[0][0] == icon || gameGrid[0][0] == Elements.EMPTY) {
+                    if (gameGrid[1][0] == icon || gameGrid[1][0] == Elements.EMPTY) {
+                        if (gameGrid[2][0] == icon || gameGrid[2][0] == Elements.EMPTY) {
+                            return ("LeftColumn");
+                        }
+                    }
+                }
+                break;
+            case 5:
+                //Middle Column
+                if (gameGrid[0][1] == icon || gameGrid[0][1] == Elements.EMPTY) {
+                    if (gameGrid[1][1] == icon || gameGrid[1][1] == Elements.EMPTY) {
+                        if (gameGrid[2][1] == icon || gameGrid[2][1] == Elements.EMPTY) {
+                            return ("MiddleColumn");
+                        }
+                    }
+                }
+                break;
+            case 6:
+                //Right Column
+                if (gameGrid[0][2] == icon || gameGrid[0][2] == Elements.EMPTY) {
+                    if (gameGrid[1][2] == icon || gameGrid[1][2] == Elements.EMPTY) {
+                        if (gameGrid[2][2] == icon || gameGrid[2][2] == Elements.EMPTY) {
+                            return ("RightColumn");
+                        }
+                    }
+                }
+                break;
+            case 7:
+                // Diagonal 1
+                if (gameGrid[0][2] == icon || gameGrid[0][2] == Elements.EMPTY) {
+                    if (gameGrid[1][1] == icon || gameGrid[1][1] == Elements.EMPTY) {
+                        if (gameGrid[2][0] == icon || gameGrid[2][0] == Elements.EMPTY) {
+                            return ("Diagonal1");
+                        }
+                    }
+                }
+                break;
+            case 8:
+                // Diagonal 2
+                if (gameGrid[0][2] == icon || gameGrid[0][2] == Elements.EMPTY) {
+                    if (gameGrid[1][2] == icon || gameGrid[1][2] == Elements.EMPTY) {
+                        if (gameGrid[2][2] == icon || gameGrid[2][2] == Elements.EMPTY) {
+                            return ("Diagonal2");
+                        }
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+        return "Random";
+
     }
 }
