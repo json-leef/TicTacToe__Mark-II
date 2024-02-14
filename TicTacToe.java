@@ -178,6 +178,116 @@ public class TicTacToe {
     }
 
     public void versusFriend() {
+        printGameBoard(gameBoard);
+
+        Boolean goFirst = true;
+        Elements playerIcon;
+        Elements cpuIcon;
+            playerIcon = Elements.X;
+            cpuIcon = Elements.O;
+        
+        
+        //order.close();
+
+        while (true) {
+            
+            System.out.println("Player 1: Enter your placement (row, column): ");
+            Scanner scanRow =  new Scanner(System.in);
+            System.out.println("What row?");
+            int row = scanRow.nextInt();
+
+            Scanner scanCol =  new Scanner(System.in);
+            System.out.println("What column?");
+            int col = scanCol.nextInt();
+            //int playerPos = scanRow.nextInt();
+            //scan.close();
+            int playerPos = 1; // deelete afgtyer. Just a placeholder
+
+            row = row - 1;
+            col = col - 1;
+
+            while (gameGrid[row][col] != Elements.EMPTY) {
+                System.out.println("Position Taken!");
+
+                Scanner scanRow2 =  new Scanner(System.in);
+                System.out.println("What row?");
+                row = scanRow2.nextInt();
+
+                Scanner scanCol2 =  new Scanner(System.in);
+                System.out.println("What column?");
+                col = scanCol2.nextInt();
+
+                row = row - 1;
+                col = col - 1;
+            }
+
+            // while (playerPositions.contains(playerPos) || cpuPositions.contains(playerPos)) {
+            //     System.out.println("Position taken!");
+            //     playerPos = scanRow.nextInt();
+            // }
+
+            placePiece(gameBoard, row, col, playerIcon);
+
+            result = checkWinner(playerIcon);
+            if (result == 'w') {
+                System.out.println("Congratualtions, Player 1 Wins!");
+                break;
+            }
+            else if (result == 'f') {
+                System.out.println("Board Full!");
+                break;
+            }
+            
+// ------------------------------------------------------------
+            System.out.println("Player 2: Enter your placement (row, column): ");
+            Scanner scanRow2 =  new Scanner(System.in);
+            System.out.println("What row?");
+            int row2 = scanRow2.nextInt();
+
+            Scanner scanCol2 =  new Scanner(System.in);
+            System.out.println("What column?");
+            int col2 = scanCol2.nextInt();
+            //int playerPos = scanRow.nextInt();
+            //scan.close();
+            //int playerPos = 1; // deelete afgtyer. Just a placeholder
+
+            row2 = row2 - 1;
+            col2 = col2 - 1;
+
+            while (gameGrid[row2][col2] != Elements.EMPTY) {
+                System.out.println("Position Taken!");
+
+                Scanner scanRowAgain =  new Scanner(System.in);
+                System.out.println("What row?");
+                row = scanRowAgain.nextInt();
+
+                Scanner scanColAgain =  new Scanner(System.in);
+                System.out.println("What column?");
+                col = scanColAgain.nextInt();
+
+                row = row - 1;
+                col = col - 1;
+            }
+
+            // while (playerPositions.contains(playerPos) || cpuPositions.contains(playerPos)) {
+            //     System.out.println("Position taken!");
+            //     playerPos = scanRow.nextInt();
+            // }
+
+            placePiece(gameBoard, row, col, playerIcon);
+
+            result = checkWinner(playerIcon);
+            if (result == 'w') {
+                System.out.println("Congratualtions, Player 2 Wins!");
+                break;
+            }
+            else if (result == 'f') {
+                System.out.println("Board Full!");
+                break;
+            }
+
+        }
+
 
     }
 
