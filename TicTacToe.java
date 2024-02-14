@@ -8,6 +8,7 @@ public class TicTacToe {
 
     static ArrayList<Integer> playerPositions = new ArrayList<Integer>();
     static ArrayList<Integer> cpuPositions = new ArrayList<Integer>();
+    char result;
     
     private enum Elements {X, O, EMPTY};
     private Elements[][] gameGrid = new Elements[3][3];
@@ -84,14 +85,16 @@ public class TicTacToe {
                 placePiece(gameBoard, cpuRow, cpuCol, cpuIcon);
                 printGameBoard(gameBoard);
 
-                String result = checkWinner();
-                result = checkWinner();
-                if (result.length() > 0) {
-                    System.out.println(result);
+                result = checkWinner(cpuIcon);
+                if (result == 'w') {
+                    System.out.println("CPU Wins!");
                     break;
                 }
-                System.out.println(result);
-                goFirst = true;
+                else if (result == 'f') {
+                    System.out.println("Board Full!");
+                    break;
+                }
+                    goFirst = true;
 
             } 
             System.out.println("Enter your placement (row, column): ");
@@ -131,11 +134,16 @@ public class TicTacToe {
 
             placePiece(gameBoard, row, col, playerIcon);
 
-            String result = checkWinner();
-            if (result.length() > 0) {
-                System.out.println(result);
+            result = checkWinner(playerIcon);
+            if (result == 'w') {
+                System.out.println("Congratualtions!");
                 break;
             }
+            else if (result == 'f') {
+                System.out.println("Board Full!");
+                break;
+            }
+            
 
             Random rand = new Random();
             int cpuRow = rand.nextInt(3);
@@ -155,12 +163,15 @@ public class TicTacToe {
             placePiece(gameBoard, cpuRow, cpuCol, cpuIcon);
             printGameBoard(gameBoard);
 
-            result = checkWinner();
-            if (result.length() > 0) {
-                System.out.println(result);
+            result = checkWinner(cpuIcon);
+            if (result == 'w') {
+                System.out.println("CPU Wins!");
                 break;
             }
-            System.out.println(result);
+            else if (result == 'f') {
+                System.out.println("Board Full!");
+                break;
+            }
 
         }
 
@@ -241,41 +252,95 @@ public class TicTacToe {
         //gameBoard[row][col] = icon;
     }
 
-    public static String checkWinner() {
+    public char checkWinner(Elements icon) {
 
-        List topRow = Arrays.asList(1, 2, 3 );
-        List midRow = Arrays.asList(4, 5, 6);
-        List botRow = Arrays.asList(7, 8, 9);
-        List leftCol = Arrays.asList(1, 4, 7);
-        List midCol = Arrays.asList(2, 5, 8);
-        List rigthCol = Arrays.asList(3, 6, 9);
-        List cross1 = Arrays.asList(1, 5, 9);
-        List cross2 = Arrays.asList(3, 5, 7);
-
-        List<List> winning = new ArrayList<List>();
-        winning.add(topRow);
-        winning.add(midRow);
-        winning.add(botRow);
-        winning.add(midCol);
-        winning.add(rigthCol);
-        winning.add(cross1);
-        winning.add(cross2);
-
-        for (List l : winning) {
-            if (playerPositions.containsAll(l)) {
-                return "Congratulations!!";
-                //System.out.println("Congrutaltions!");
-            } else if(cpuPositions.containsAll(l)) {
-                return "CPU wins! Sorry!";
-            } else if (playerPositions.size() + cpuPositions.size() == 9) {
-                return ("FULL!");
+        //Top Row
+        if (gameGrid[0][0] == icon){
+            if (gameGrid[0][1] == icon) {
+                if (gameGrid[0][2] == icon) {
+                    return ('w');
+                }
             }
-        } 
-
-
-
-
-        return "";
+        }
+        //Middle Row
+        if (gameGrid[1][0] == icon) {
+            if (gameGrid[1][1] == icon) {
+                if (gameGrid[1][2] == icon) {
+                    return ('w');
+                }
+            }
+        }
+        //Bottom Row
+        if (gameGrid[2][0] == icon) {
+            if (gameGrid[2][1] == icon) {
+                if (gameGrid[2][2] == icon) {
+                    return ('w');
+                }
+            }
+        }
+        //Left Column
+        if (gameGrid[0][0] == icon) {
+            if (gameGrid[1][0] == icon) {
+                if (gameGrid[2][0] == icon) {
+                    return ('w');
+                }
+            }
+        }
+        //Middle Column
+        if (gameGrid[0][1] == icon) {
+            if (gameGrid[1][1] == icon) {
+                if (gameGrid[2][1] == icon) {
+                    return ('w');
+                }
+            }
+        }
+        //Right Column
+        if (gameGrid[0][2] == icon) {
+            if (gameGrid[1][2] == icon) {
+                if (gameGrid[2][2] == icon) {
+                    return ('w');
+                }
+            }
+        }
+        // Diagonal 1
+        if (gameGrid[0][2] == icon) {
+            if (gameGrid[1][1] == icon) {
+                if (gameGrid[2][0] == icon) {
+                    return ('w');
+                }
+            }
+        }
+        // Diagonal 2
+        if (gameGrid[0][2] == icon) {
+            if (gameGrid[1][2] == icon) {
+                if (gameGrid[2][2] == icon) {
+                    return ('w');
+                }
+            }
+        }
+        // Full Board Check
+        else if (gameGrid[0][0] != Elements.EMPTY) {
+            if (gameGrid[0][1] != Elements.EMPTY) {
+                if (gameGrid[0][2] != Elements.EMPTY) {
+                    if (gameGrid[1][0] != Elements.EMPTY) {
+                        if (gameGrid[1][1] != Elements.EMPTY) {
+                            if (gameGrid[1][2] != Elements.EMPTY) {
+                                if (gameGrid[2][0] != Elements.EMPTY) {
+                                    if (gameGrid[2][1] != Elements.EMPTY) {
+                                        if (gameGrid[2][2] != Elements.EMPTY) {
+                                            return ('f');
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        return ('o');
+        
     }
 
 }
