@@ -178,13 +178,10 @@ public class TicTacToe {
     }
 
     public void versusFriend() {
-        printGameBoard(gameBoard);
-
-        Boolean goFirst = true;
-        Elements playerIcon;
-        Elements cpuIcon;
-            playerIcon = Elements.X;
-            cpuIcon = Elements.O;
+        Elements playerOneIcon;
+        Elements playerTwoIcon;
+            playerOneIcon = Elements.X;
+            playerTwoIcon = Elements.O;
         
         
         //order.close();
@@ -209,13 +206,13 @@ public class TicTacToe {
             while (gameGrid[row][col] != Elements.EMPTY) {
                 System.out.println("Position Taken!");
 
-                Scanner scanRow2 =  new Scanner(System.in);
+                Scanner scanRowAgain1 =  new Scanner(System.in);
                 System.out.println("What row?");
-                row = scanRow2.nextInt();
+                row = scanRowAgain1.nextInt();
 
-                Scanner scanCol2 =  new Scanner(System.in);
+                Scanner scanColAgain1 =  new Scanner(System.in);
                 System.out.println("What column?");
-                col = scanCol2.nextInt();
+                col = scanColAgain1.nextInt();
 
                 row = row - 1;
                 col = col - 1;
@@ -226,9 +223,10 @@ public class TicTacToe {
             //     playerPos = scanRow.nextInt();
             // }
 
-            placePiece(gameBoard, row, col, playerIcon);
+            placePiece(gameBoard, row, col, playerOneIcon);
+            printGameBoard(gameBoard);
 
-            result = checkWinner(playerIcon);
+            result = checkWinner(playerOneIcon);
             if (result == 'w') {
                 System.out.println("Congratualtions, Player 1 Wins!");
                 break;
@@ -257,16 +255,16 @@ public class TicTacToe {
             while (gameGrid[row2][col2] != Elements.EMPTY) {
                 System.out.println("Position Taken!");
 
-                Scanner scanRowAgain =  new Scanner(System.in);
+                Scanner scanRowAgain2 =  new Scanner(System.in);
                 System.out.println("What row?");
-                row = scanRowAgain.nextInt();
+                row2 = scanRowAgain2.nextInt();
 
-                Scanner scanColAgain =  new Scanner(System.in);
+                Scanner scanColAgain2 =  new Scanner(System.in);
                 System.out.println("What column?");
-                col = scanColAgain.nextInt();
+                col2 = scanColAgain2.nextInt();
 
-                row = row - 1;
-                col = col - 1;
+                row2 = row2 - 1;
+                col2 = col2 - 1;
             }
 
             // while (playerPositions.contains(playerPos) || cpuPositions.contains(playerPos)) {
@@ -274,9 +272,10 @@ public class TicTacToe {
             //     playerPos = scanRow.nextInt();
             // }
 
-            placePiece(gameBoard, row, col, playerIcon);
+            placePiece(gameBoard, row2, col2, playerTwoIcon);
+            printGameBoard(gameBoard);
 
-            result = checkWinner(playerIcon);
+            result = checkWinner(playerTwoIcon);
             if (result == 'w') {
                 System.out.println("Congratualtions, Player 2 Wins!");
                 break;
