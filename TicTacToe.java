@@ -307,12 +307,16 @@ public class TicTacToe {
     /// and print them all out                                            ///
     /////////////////////////////////////////////////////////////////////////
     public void printGameBoard(){
+        System.out.println("***********");
         for (char[] row : gameBoard) {
+            System.out.print("*  ");
             for(char c : row ) {
                 System.out.print(c);
             }
+            System.out.print("  *");
             System.out.println();
         }
+        System.out.println("***********");
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
     /// placePiece (where the player wants to move, and which player is moving)                  ///                                 ///
