@@ -10,47 +10,52 @@
 //
 // Description:
 // A program that allows a user to play Tic-Tac-Toe. User can decide if they would like to
-// play against another person beside them, or against the computer. The game board data is 
-// stored in a 3x3 2D array, & uses enum constants {X, O, EMPTY} to be pieces on the board.
-// After each move, the program determines whether the game has been won, lost, or a draw.
+// play against another person beside them, against the computer, or watch the computer play
+// against itself. The game board data is stored in a 3x3 2D array, & uses enum constants 
+// {X, O, EMPTY} to be pieces on the board. After each move, the program determines whether 
+// the game has been won, lost, or a draw.
 // 
 //
 // Assumptions:
-// 
+// n/a
 //---------------------------------------------------------------------------
 
 //
 // Class: Tic-Tac-Toe
 //
 // Description:
-// Declares a private 2D array (gameGrid), enums (X, O, and EMPTY), a visual board for printing the game (gameBoard)
-// 
+// Declares a private 2D array (gameGrid), enums (X, O, and EMPTY), a visual board for printing the game (gameBoard).
+// Features 8 different methods, used to help the user play against the computer, play against a friend, or watch cpu vs cpu.
 //
 import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToe {
-
-    char result;
-    
     private enum Elements {X, O, EMPTY};
     private Elements[][] gameGrid = new Elements[3][3];
-
     char [] [] gameBoard = {{' ', '|', ' ', '|', ' '},
                 {'-', '+', '-', '+', '-'},
                 {' ', '|', ' ', '|', ' '},
                 {'-', '+', '-', '+', '-'},
                 {' ', '|', ' ', '|', ' '}};
+    char result;
     
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    /// Main (String[] args)                                                                    ///
+    /// Input : (String[] args)                                                                 ///
+    /// Output: n/a                                                                             ///
+    /// Begins the program by initializing the array to be all EMPTY. And                       ///
+    /// then asks the user if they want to play against the computer, play                      ///
+    /// against another person beside them, or see the sim results of computer vs. computer     ///
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     public static void main(String[] args) {
         TicTacToe action = new TicTacToe();
-
         for (int a = 0; a < 3; a++) {
             for (int b = 0; b < 3; b++) {
                 action.gameGrid[a][b] = Elements.EMPTY;
             }
         }
-
         while (true) {
             Scanner players =  new Scanner(System.in);
             System.out.println("1 Player, 2 Players, or CPU vs CPU? [Enter 1 or 2 or 3] ");
@@ -104,6 +109,7 @@ public class TicTacToe {
         }
 
         while (true) {
+            // Handles case if user chooses to go second
             if (goFirst == false) {
                 Random rand = new Random();
                 int cpuRow = rand.nextInt(2) + 1;
@@ -122,8 +128,8 @@ public class TicTacToe {
                     break;
                 }
                     goFirst = true;
-
             } 
+            // User's turn
             System.out.println("Enter your placement (row, column): ");
             Scanner scanRow =  new Scanner(System.in);
             System.out.println("What row?");
@@ -133,7 +139,7 @@ public class TicTacToe {
             System.out.println("What column?");
             int col = scanCol.nextInt();
 
-
+            // Subtracts user's values by 1 to account for array's index zero
             row = row - 1;
             col = col - 1;
 
@@ -151,8 +157,6 @@ public class TicTacToe {
                 row = row - 1;
                 col = col - 1;
             }
-
-
             placePiece(row, col, playerIcon);
 
             result = checkWinner(playerIcon);
@@ -164,8 +168,8 @@ public class TicTacToe {
                 System.out.println("Board Full!");
                 break;
             }
-            
 
+            // CPU's turn
             Random rand = new Random();
             int cpuRow = rand.nextInt(3);
             int cpuCol = rand.nextInt(3);
@@ -188,9 +192,7 @@ public class TicTacToe {
                 System.out.println("Board Full!");
                 break;
             }
-
         }
-
     }
 
     /////////////////////////////////////////////////////////////////////////
@@ -302,7 +304,7 @@ public class TicTacToe {
     /////////////////////////////////////////////////////////////////////////
     /// printGameBoard ()                                                 ///
     /// Input : n/a                                                       ///
-    /// Output: Prints out a visual depiction of the gameboard thus far   ///                                            ///
+    /// Output: Prints out a visual depiction of the gameboard thus far   ///                                            
     /// Double for-loop to cycle through all chars in the gameBoard array ///
     /// and print them all out                                            ///
     /////////////////////////////////////////////////////////////////////////
@@ -319,8 +321,8 @@ public class TicTacToe {
         System.out.println("***********");
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    /// placePiece (where the player wants to move, and which player is moving)                  ///                                 ///
-    /// Input : int row and int column coordinates on grid. Whoever's turn's enum assignment.    ///                                               ///
+    /// placePiece (where the player wants to move, and which player is moving)                  ///                                 
+    /// Input : int row and int column coordinates on grid. Whoever's turn's enum assignment.    ///                                               
     /// Output: n/a                                                                              ///
     /// Places the player's piece at their desired coordinates. Updates the gameGrid array       ///
     /// and also the visual gameBoard array. Uses strings to concatonate a unique identifier for ///
@@ -389,9 +391,9 @@ public class TicTacToe {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////
-    /// checkWinner (Whoever's current turn it is' assigned enum element/game piece)     ///                                              ///
+    /// checkWinner (Whoever's current turn it is' assigned enum element/game piece)     ///                                             
     /// Input : X or O                                                                   ///
-    /// Output: Returns either ('w') = win, ('f') = full, or ('o') = continue            ///                                        ///
+    /// Output: Returns either ('w') = win, ('f') = full, or ('o') = continue            ///                                        
     /// Has the stored winning patterns; uses a series of if-statements to check the     ///
     /// current private 3x3 gameGrid if it has 3 of the current game piece in a row.     ///
     /// If it does, it returns ('w'). If the board is full, it returns ('f'), and        ///
@@ -449,6 +451,14 @@ public class TicTacToe {
             }
         }
         // Diagonal 1
+        if (gameGrid[0][0] == icon) {
+            if (gameGrid[1][1] == icon) {
+                if (gameGrid[2][2] == icon) {
+                    return ('w');
+                }
+            }
+        }
+        // Diagonal 2
         if (gameGrid[0][2] == icon) {
             if (gameGrid[1][1] == icon) {
                 if (gameGrid[2][0] == icon) {
@@ -456,14 +466,7 @@ public class TicTacToe {
                 }
             }
         }
-        // Diagonal 2
-        if (gameGrid[0][2] == icon) {
-            if (gameGrid[1][2] == icon) {
-                if (gameGrid[2][2] == icon) {
-                    return ('w');
-                }
-            }
-        }
+        
         // Full Board Check
         else if (gameGrid[0][0] != Elements.EMPTY) {
             if (gameGrid[0][1] != Elements.EMPTY) {
@@ -488,31 +491,73 @@ public class TicTacToe {
         return ('o');
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    /// cpuVersusCpu ()                                                                          ///                              
+    /// Input :     ///                                               
+    /// Output: Visual Depictions of how the simmed game went                                                                              ///
+    /// Uses a while loop to simulate through the 2 cpu's turns. Each cpu has a plan with moves they
+    /// wish to make. With the beginning of each new turn, the vitality of their current plan is
+    /// checked, and if it is rendered invalid from opponent's previous move, it selects a new plan.                                                           ///
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     public void cpuVersusCpu() {
-        Elements CpuOneIcon;
-        Elements CpuTwoIcon;
-        CpuOneIcon = Elements.X;
-        CpuTwoIcon = Elements.O;
-
-        int cpuSeed;
-        
-
-        String cpuPlan = null;
-
-        int row;
-        int col;
         Elements gamePiece;
         gamePiece = Elements.X;
 
+        //The randomly generated seed that corresponds to a plan
+        int cpuSeed;
+        int x_planNumber = 0;
+        int o_planNumber = 0;
+        
+        
+        // Boolean checker for each side's plan
+        Boolean planIsGood_X = false;
+        Boolean planIsGood_O = false;
+        
+        
+        // Name of the plan they wish to carry out
+        String xPlan = null;
+        String oPlan = null;
+        String cpuPlan = null;
+
+        // Checker variable that checks if the plan is still good
+        String checker = null;
         System.out.println("Cpu vs. Cpu:");
 
 
         while (true) {
-            Random rand = new Random();
-            cpuSeed = rand.nextInt(8) + 1;
-            cpuPlan = cpuStrategy(cpuSeed, gamePiece);
-        
+            //Checks if the plan is still good for either X or O when it's their turn.
+            if (gamePiece == Elements.X) {
+                cpuPlan = xPlan;
+                checker = cpuStrategy(x_planNumber, gamePiece);
+                if (checker == "Random") {
+                    planIsGood_X = false;
+                }
+
+            } else if (gamePiece == Elements.O) {
+                cpuPlan = oPlan;
+                checker = cpuStrategy(o_planNumber, gamePiece);
+                    if (checker == "Random") {
+                        planIsGood_O = false;
+                    }
+            }
             
+            // If the plan is no longer valid, then uses random number generator to select a new viable plan
+            if (gamePiece == Elements.X && planIsGood_X == false) {
+                Random rand = new Random();
+                cpuSeed = rand.nextInt(8) + 1;
+                x_planNumber = cpuSeed;
+                xPlan = cpuStrategy(cpuSeed, gamePiece);
+                cpuPlan = xPlan;
+                planIsGood_X = true;
+            } else if (gamePiece == Elements.O && planIsGood_O == false) {
+                Random rand = new Random();
+                cpuSeed = rand.nextInt(8) + 1;
+                oPlan = cpuStrategy(cpuSeed, gamePiece);
+                cpuPlan = oPlan;
+                planIsGood_O = true;
+            }
+            
+            // Depending on what the String for xPlan or oPlan is, uses the identifier to execute the right moves
             switch(cpuPlan) {
                 case "TopRow":
                     if (gameGrid[0][0] == Elements.EMPTY) {
@@ -521,15 +566,6 @@ public class TicTacToe {
                         placePiece(0, 1, gamePiece);
                     } else if (gameGrid[0][2] == Elements.EMPTY) {
                         placePiece(0, 2, gamePiece);
-                    }
-                    result = checkWinner(gamePiece);
-                    if (result == 'w') {
-                        System.out.println(gamePiece + " Wins!");
-                        break;
-                    }
-                    else if (result == 'f') {
-                        System.out.println("Draw!");
-                        break;
                     }
                     break;
                 case "MiddleRow":
@@ -607,6 +643,7 @@ public class TicTacToe {
                     placePiece(cpuRow, cpuCol, gamePiece);
 
             }
+            //Printing & checking board
             printGameBoard();
             result = checkWinner(gamePiece);
             if (result == 'w') {
@@ -618,14 +655,22 @@ public class TicTacToe {
                 break;
             }
 
-        if (gamePiece == Elements.X) {
-            gamePiece = Elements.O;
-        } else if (gamePiece == Elements.O) {
-            gamePiece = Elements.X;
-        }
+            // Switches the sides as the loop starts back up again
+            if (gamePiece == Elements.X) {
+                gamePiece = Elements.O;
+            } else if (gamePiece == Elements.O) {
+                gamePiece = Elements.X;
+            }
         }
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// cpuStrategy (Seeing if the next plan has a path to victory)                                       ///                                               ///                              
+    /// Input : The randomly selected seed number to choose a plan, and the current side's icon           ///                                               
+    /// Output: Returns a string of the plan's pattern. For the xPlan or oPlan variable.                  ///                                                                ///
+    /// Uses a switch statement laying out all 8 winnable plans on the board. If it is a viable path      ///
+    /// then returns the name of the plan, if no other paths exist, then returns a strategy to be random  ///                                                       ///
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
     public String cpuStrategy(int seed, Elements icon) {
         switch (seed) {
             case 1:
@@ -710,6 +755,7 @@ public class TicTacToe {
                 break;
             default:
                 break;
+                
         }
         return "Random";
 
