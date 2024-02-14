@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------
 //
 // Tic-Tac-Toe
-// A Tic Tac Toe game, where you can play against another person, or against a CPU
+// A Tic-Tac-Toe game, where you can play against another person, or against a CPU
 //
 // Author: Jason Lee
 // Date: 02/14/24
@@ -9,9 +9,21 @@
 // Issues: None known
 //
 // Description:
+// A program that allows a user to play Tic-Tac-Toe. User can decide if they would like to
+// play against another person beside them, or against the computer. The game board data is 
+// stored in a 3x3 2D array, & uses enum constants {X, O, EMPTY} to be pieces on the board.
+// After each move, the program determines whether the game has been won, lost, or a draw.
 // 
 //
 // Assumptions:
+// 
+//---------------------------------------------------------------------------
+
+//
+// Class: Tic-Tac-Toe
+//
+// Description:
+// Declares a private 2D array (gameGrid), enums (X, O, and EMPTY), a visual board for printing the game (gameBoard)
 // 
 //
 import java.util.Random;
@@ -58,8 +70,17 @@ public class TicTacToe {
         }  
     }
 
+    /////////////////////////////////////////////////////////////////////
+    /// versusCPU ()                                                  ///
+    /// Input : n/a                                                   ///
+    /// Output: n/a                                                   ///
+    /// Purpose is to simulate a Tic-Tac-Toe game of user vs. CPU     ///
+    /// Simply simulates the game, and calls methods of checkWinner() ///
+    /// and placePiece() after each move. If the game ends in a Win   ///
+    /// loss, or draw, the method (& program) ends.                   ///
+    /////////////////////////////////////////////////////////////////////
     public void versusCPU() {
-        printGameBoard(gameBoard);
+        printGameBoard();
 
         Boolean goFirst = true;
         Elements playerIcon;
@@ -85,8 +106,8 @@ public class TicTacToe {
                 int cpuRow = rand.nextInt(2) + 1;
                 int cpuCol = rand.nextInt(2) + 1;
 
-                placePiece(gameBoard, cpuRow, cpuCol, cpuIcon);
-                printGameBoard(gameBoard);
+                placePiece(cpuRow, cpuCol, cpuIcon);
+                printGameBoard();
 
                 result = checkWinner(cpuIcon);
                 if (result == 'w') {
@@ -129,7 +150,7 @@ public class TicTacToe {
             }
 
 
-            placePiece(gameBoard, row, col, playerIcon);
+            placePiece(row, col, playerIcon);
 
             result = checkWinner(playerIcon);
             if (result == 'w') {
@@ -152,8 +173,8 @@ public class TicTacToe {
                 cpuCol = rand2.nextInt(3);
 
             }
-            placePiece(gameBoard, cpuRow, cpuCol, cpuIcon);
-            printGameBoard(gameBoard);
+            placePiece(cpuRow, cpuCol, cpuIcon);
+            printGameBoard();
 
             result = checkWinner(cpuIcon);
             if (result == 'w') {
@@ -169,24 +190,34 @@ public class TicTacToe {
 
     }
 
+    /////////////////////////////////////////////////////////////////////////
+    /// versusFriend ()                                                   ///
+    /// Input : n/a                                                       ///
+    /// Output: n/a                                                       ///
+    /// Purpose is to simulate a Tic-Tac-Toe game of user vs. other user  ///
+    /// Simply simulates the game, and calls methods of checkWinner()     ///
+    /// and placePiece() after each move. If the game ends in a Win       ///
+    /// loss, or draw, the method (& program) ends.                       ///
+    /////////////////////////////////////////////////////////////////////////
     public void versusFriend() {
+        // Establishes which player gets to be X and which gets to be O
         Elements playerOneIcon;
         Elements playerTwoIcon;
-            playerOneIcon = Elements.X;
-            playerTwoIcon = Elements.O;
+        playerOneIcon = Elements.X;
+        playerTwoIcon = Elements.O;
 
 
         while (true) {
-            
+            // Player 1's Turn
             System.out.println("Player 1: Enter your placement (row, column): ");
             Scanner scanRow =  new Scanner(System.in);
             System.out.println("What row?");
             int row = scanRow.nextInt();
-
             Scanner scanCol =  new Scanner(System.in);
             System.out.println("What column?");
             int col = scanCol.nextInt();
 
+            // Subtracts user's values by 1 to account for array's index zero
             row = row - 1;
             col = col - 1;
 
@@ -206,8 +237,8 @@ public class TicTacToe {
             }
 
 
-            placePiece(gameBoard, row, col, playerOneIcon);
-            printGameBoard(gameBoard);
+            placePiece(row, col, playerOneIcon);
+            printGameBoard();
 
             result = checkWinner(playerOneIcon);
             if (result == 'w') {
@@ -219,7 +250,7 @@ public class TicTacToe {
                 break;
             }
             
-// ------------------------------------------------------------
+            // Player 2's Turn
             System.out.println("Player 2: Enter your placement (row, column): ");
             Scanner scanRow2 =  new Scanner(System.in);
             System.out.println("What row?");
@@ -247,8 +278,8 @@ public class TicTacToe {
                 col2 = col2 - 1;
             }
 
-            placePiece(gameBoard, row2, col2, playerTwoIcon);
-            printGameBoard(gameBoard);
+            placePiece(row2, col2, playerTwoIcon);
+            printGameBoard();
 
             result = checkWinner(playerTwoIcon);
             if (result == 'w') {
@@ -265,7 +296,14 @@ public class TicTacToe {
 
     }
 
-    public static void printGameBoard(char[][] gameBoard){
+    /////////////////////////////////////////////////////////////////////////
+    /// printGameBoard ()                                                 ///
+    /// Input : n/a                                                       ///
+    /// Output: Prints out a visual depiction of the gameboard thus far   ///                                            ///
+    /// Double for-loop to cycle through all chars in the gameBoard array ///
+    /// and print them all out                                            ///
+    /////////////////////////////////////////////////////////////////////////
+    public void printGameBoard(){
         for (char[] row : gameBoard) {
             for(char c : row ) {
                 System.out.print(c);
@@ -273,8 +311,16 @@ public class TicTacToe {
             System.out.println();
         }
     }
-
-    public void placePiece(char[][] gameBoard, int row, int col, Elements icon) {
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    /// placePiece (where the player wants to move, and which player is moving)                  ///                                 ///
+    /// Input : int row and int column coordinates on grid. Whoever's turn's enum assignment.    ///                                               ///
+    /// Output: n/a                                                                              ///
+    /// Places the player's piece at their desired coordinates. Updates the gameGrid array       ///
+    /// and also the visual gameBoard array. Uses strings to concatonate a unique identifier for ///
+    /// where in the board the move must go, and then uses a switch statement to place either    ///
+    /// X or O on the visual gameboard.                                                          ///
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    public void placePiece(int row, int col, Elements icon) {
         gameGrid[row][col] = icon;
         String pos = null;
         char symbol = ' ';
@@ -335,6 +381,16 @@ public class TicTacToe {
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////
+    /// checkWinner (Whoever's current turn it is' assigned enum element/game piece)     ///                                              ///
+    /// Input : X or O                                                                   ///
+    /// Output: Returns either ('w') = win, ('f') = full, or ('o') = continue            ///                                        ///
+    /// Has the stored winning patterns; uses a series of if-statements to check the     ///
+    /// current private 3x3 gameGrid if it has 3 of the current game piece in a row.     ///
+    /// If it does, it returns ('w'). If the board is full, it returns ('f'), and        ///
+    /// if no one has won yet and moves can still be made, it return ('o') for the       ///
+    /// game to continue.                                                                ///
+    ////////////////////////////////////////////////////////////////////////////////////////
     public char checkWinner(Elements icon) {
 
         //Top Row
@@ -421,9 +477,7 @@ public class TicTacToe {
                 }
             }
         }
-        
+        // If game can continue to be played
         return ('o');
-        
     }
-
 }
