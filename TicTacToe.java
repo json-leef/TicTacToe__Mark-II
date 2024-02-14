@@ -1,3 +1,19 @@
+//---------------------------------------------------------------------------
+//
+// Tic-Tac-Toe
+// A Tic Tac Toe game, where you can play against another person, or against a CPU
+//
+// Author: Jason Lee
+// Date: 02/14/24
+// Class: MET CS622
+// Issues: None known
+//
+// Description:
+// 
+//
+// Assumptions:
+// 
+//
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -6,8 +22,6 @@ import java.util.Scanner;
 
 public class TicTacToe {
 
-    static ArrayList<Integer> playerPositions = new ArrayList<Integer>();
-    static ArrayList<Integer> cpuPositions = new ArrayList<Integer>();
     char result;
     
     private enum Elements {X, O, EMPTY};
@@ -18,8 +32,6 @@ public class TicTacToe {
                 {' ', '|', ' ', '|', ' '},
                 {'-', '+', '-', '+', '-'},
                 {' ', '|', ' ', '|', ' '}};
-
-        //printGameBoard(gameBoard);
     
     public static void main(String[] args) {
         TicTacToe action = new TicTacToe();
@@ -50,9 +62,6 @@ public class TicTacToe {
     }
 
     public void versusCPU() {
-        //System.out.println(gameGrid);
-        //gameGrid[2][2] = Elements.X;
-        //System.out.println(gameGrid[2][2]);
         printGameBoard(gameBoard);
 
         Boolean goFirst = true;
@@ -72,16 +81,13 @@ public class TicTacToe {
             playerIcon = Elements.O;
             cpuIcon = Elements.X;
         }
-        //order.close();
 
         while (true) {
             if (goFirst == false) {
                 Random rand = new Random();
                 int cpuRow = rand.nextInt(2) + 1;
                 int cpuCol = rand.nextInt(2) + 1;
-                // while (playerPositions.contains(cpuPos) || cpuPositions.contains(cpuPos)) {
-                //     cpuPos = rand.nextInt(9) + 1;
-                // }
+
                 placePiece(gameBoard, cpuRow, cpuCol, cpuIcon);
                 printGameBoard(gameBoard);
 
@@ -105,9 +111,7 @@ public class TicTacToe {
             Scanner scanCol =  new Scanner(System.in);
             System.out.println("What column?");
             int col = scanCol.nextInt();
-            //int playerPos = scanRow.nextInt();
-            //scan.close();
-            int playerPos = 1; // deelete afgtyer. Just a placeholder
+
 
             row = row - 1;
             col = col - 1;
@@ -127,10 +131,6 @@ public class TicTacToe {
                 col = col - 1;
             }
 
-            // while (playerPositions.contains(playerPos) || cpuPositions.contains(playerPos)) {
-            //     System.out.println("Position taken!");
-            //     playerPos = scanRow.nextInt();
-            // }
 
             placePiece(gameBoard, row, col, playerIcon);
 
@@ -149,16 +149,11 @@ public class TicTacToe {
             int cpuRow = rand.nextInt(3);
             int cpuCol = rand.nextInt(3);
             while (gameGrid[cpuRow][cpuCol] != Elements.EMPTY) {
-                //System.out.println("Position Taken!");
 
                 Random rand2 = new Random();
                 cpuRow = rand2.nextInt(3);
                 cpuCol = rand2.nextInt(3);
 
-                
-
-                //cpuRow = row - 1;
-                //cpuCol = col - 1;
             }
             placePiece(gameBoard, cpuRow, cpuCol, cpuIcon);
             printGameBoard(gameBoard);
@@ -182,9 +177,7 @@ public class TicTacToe {
         Elements playerTwoIcon;
             playerOneIcon = Elements.X;
             playerTwoIcon = Elements.O;
-        
-        
-        //order.close();
+
 
         while (true) {
             
@@ -196,9 +189,6 @@ public class TicTacToe {
             Scanner scanCol =  new Scanner(System.in);
             System.out.println("What column?");
             int col = scanCol.nextInt();
-            //int playerPos = scanRow.nextInt();
-            //scan.close();
-            int playerPos = 1; // deelete afgtyer. Just a placeholder
 
             row = row - 1;
             col = col - 1;
@@ -218,10 +208,6 @@ public class TicTacToe {
                 col = col - 1;
             }
 
-            // while (playerPositions.contains(playerPos) || cpuPositions.contains(playerPos)) {
-            //     System.out.println("Position taken!");
-            //     playerPos = scanRow.nextInt();
-            // }
 
             placePiece(gameBoard, row, col, playerOneIcon);
             printGameBoard(gameBoard);
@@ -245,9 +231,6 @@ public class TicTacToe {
             Scanner scanCol2 =  new Scanner(System.in);
             System.out.println("What column?");
             int col2 = scanCol2.nextInt();
-            //int playerPos = scanRow.nextInt();
-            //scan.close();
-            //int playerPos = 1; // deelete afgtyer. Just a placeholder
 
             row2 = row2 - 1;
             col2 = col2 - 1;
@@ -266,11 +249,6 @@ public class TicTacToe {
                 row2 = row2 - 1;
                 col2 = col2 - 1;
             }
-
-            // while (playerPositions.contains(playerPos) || cpuPositions.contains(playerPos)) {
-            //     System.out.println("Position taken!");
-            //     playerPos = scanRow.nextInt();
-            // }
 
             placePiece(gameBoard, row2, col2, playerTwoIcon);
             printGameBoard(gameBoard);
@@ -358,7 +336,6 @@ public class TicTacToe {
             default:
                 break;
         }
-        //gameBoard[row][col] = icon;
     }
 
     public char checkWinner(Elements icon) {
