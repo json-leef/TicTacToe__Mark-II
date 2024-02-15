@@ -158,6 +158,7 @@ public class TicTacToe {
                 col = col - 1;
             }
             placePiece(row, col, playerIcon);
+            printGameBoard();
 
             result = checkWinner(playerIcon);
             if (result == 'w') {
