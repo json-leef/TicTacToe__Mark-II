@@ -503,6 +503,8 @@ public class TicTacToe {
     public void cpuVersusCpu() {
         Elements gamePiece;
         gamePiece = Elements.X;
+        Boolean roundFlag = true;
+        int round = 1;
 
         //The randomly generated seed that corresponds to a plan
         int cpuSeed;
@@ -645,6 +647,9 @@ public class TicTacToe {
 
             }
             //Printing & checking board
+            if (roundFlag == true) {
+                System.out.println("~ Round " + round + " ~");
+            }
             printGameBoard();
             result = checkWinner(gamePiece);
             if (result == 'w') {
@@ -659,8 +664,11 @@ public class TicTacToe {
             // Switches the sides as the loop starts back up again
             if (gamePiece == Elements.X) {
                 gamePiece = Elements.O;
+                roundFlag = false;
             } else if (gamePiece == Elements.O) {
                 gamePiece = Elements.X;
+                roundFlag = true;
+                round++;
             }
         }
     }
