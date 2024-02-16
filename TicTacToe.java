@@ -644,6 +644,19 @@ public class TicTacToe {
                         cpuCol = diffMove.nextInt(3);
                     }
                     placePiece(cpuRow, cpuCol, gamePiece);
+                    break;
+                default:
+                    Random move2 = new Random();
+                    int cpuRow2 = move2.nextInt(3);
+                    int cpuCol2 = move2.nextInt(3);
+                    while (gameGrid[cpuRow2][cpuCol2] != Elements.EMPTY) {
+                        Random diffMove = new Random();
+                        cpuRow2 = diffMove.nextInt(3);
+                        cpuCol2 = diffMove.nextInt(3);
+                    }
+                    placePiece(cpuRow2, cpuCol2, gamePiece);
+                    break;
+                    
 
             }
             //Printing & checking board
